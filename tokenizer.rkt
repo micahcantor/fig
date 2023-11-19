@@ -5,9 +5,14 @@
 (define-lex-abbrev digits (:+ (char-set "0123456789")))
 
 (define-lex-abbrev number-token
-  (:or digits
-       (:seq (:? digits) "." digits)
-       (:seq digits ".")))
+  (:or (:seq (:? digits) "." digits)
+       digits))
+
+(define-lex-abbrev id-token
+  (:seq alphabetic (:* (:or alphabetic numeric))))
+
+(define-lex-abbrev simple-token
+  (:or "{" "}" "[" "]" "," ":" "=" "&" "==" "if" "then" "else" "let"))
 
 (define (make-tokenizer port)
   (define (next-token)
@@ -15,16 +20,12 @@
       (lexer-srcloc
        [(from/to "//" "\n") (next-token)]
        [whitespace (next-token)]
-       ["{" (token "{")]
-       ["}" (token "}")]
-       ["[" (token "[")]
-       ["]" (token "]")]
-       ["," (token ",")]
-       [":" (token ":")]
-       ["true" (token "true" 'TRUE)]
-       ["false" (token "false" 'FALSE)]
-       ["null" (token "null" null)]
-       [number-token (token 'NUMBER lexeme)]
+       [simple-token (token lexeme)]
+       ["true" (token "true" #t)]
+       ["false" (token "false" #f)]
+       ["null" (token "null" 'NULL)]
+       [number-token (token 'NUMBER (string->number lexeme))]
+       [id-token (token 'ID (string->symbol lexeme))]
        [(from/to "\"" "\"")
         (let ([value (substring lexeme 1 (sub1 (string-length lexeme)))])
           (token 'STRING value))]
