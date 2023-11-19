@@ -1,0 +1,8 @@
+1. Integrate with Racket library
+ - Command line program
+ - Convert to json
+2. Package with raco
+3. Environment vars
+4. Require other fig files
+5. Unit tests
+6. Documentation

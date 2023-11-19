@@ -16,21 +16,21 @@
 
 (define (make-tokenizer port)
   (define (next-token)
-    (define silver-lexer
+    (define fig-lexer
       (lexer-srcloc
        [(from/to "//" "\n") (next-token)]
        [whitespace (next-token)]
        [simple-token (token lexeme)]
        ["true" (token "true" #t)]
        ["false" (token "false" #f)]
-       ["null" (token "null" 'NULL)]
+       ["null" (token "null" 'null)]
        [number-token (token 'NUMBER (string->number lexeme))]
        [id-token (token 'ID (string->symbol lexeme))]
        [(from/to "\"" "\"")
         (let ([value (substring lexeme 1 (sub1 (string-length lexeme)))])
           (token 'STRING value))]
        [(eof) (void)]))
-    (silver-lexer port))
+    (fig-lexer port))
   next-token)
 
 (provide make-tokenizer)
