@@ -1,8 +1,7 @@
 #lang fig
 
 let hello = "hello"
-let goodbye = @goodbye
 {
  "hello": hello,
- "goodbye": goodbye
+ "goodbye": @goodbye
 }

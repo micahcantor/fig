@@ -2,13 +2,17 @@
 
 (require "merge.rkt")
 
+(define environment (make-hash))
+
 (define-syntax-rule (fig-mb (fig-program STMT ...))
   (#%module-begin
    (require json)
-   (define (fig->hash)
+   (define (fig->hash [env (hash)])
+     (for ([(key value) env])
+       (hash-set! environment key value))
      STMT ...)
-   (define (fig->json)
-     (jsexpr->string (fig->hash)))
+   (define (fig->json [env (hash)])
+     (jsexpr->string (fig->hash env)))
    (provide fig->hash fig->json)))
 
 (define-syntax-rule (fig-let ID VALUE)
@@ -28,8 +32,14 @@
 (define-syntax-rule (fig-merge LEFT RIGHT)
   (merge LEFT RIGHT))
 
+(define-syntax-rule (fig-apply FN ...)
+  (FN ...))
+
 (define-syntax-rule (fig-equal LEFT RIGHT)
   (equal? LEFT RIGHT))
+
+(define-syntax-rule (fig-env-ref ENVREF)
+  (hash-ref environment ENVREF))
 
 (define-syntax-rule (fig-cond CONDITION CONSEQUENT ALTERNATE)
   (if CONDITION CONSEQUENT ALTERNATE))
@@ -39,10 +49,11 @@
          fig-object
          fig-list
          fig-merge
+         fig-apply
          fig-equal
+         fig-env-ref
          fig-cond
          fig-kvpair
-         #%app
          #%datum
          #%top
          #%top-interaction)

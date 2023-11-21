@@ -9,10 +9,13 @@
        digits))
 
 (define-lex-abbrev id-token
-  (:seq alphabetic (:* (:or alphabetic numeric))))
+  (:seq alphabetic (:* (:or alphabetic numeric "-"))))
 
 (define-lex-abbrev simple-token
-  (:or "{" "}" "[" "]" "," ":" "=" "&" "==" "if" "then" "else" "let"))
+  (:or "(" ")" "{" "}" "[" "]" "," ":" "=" "&" "==" "if" "then" "else" "let"))
+
+(define-lex-abbrev env-ref-token
+  (:seq "@" id-token))
 
 (define (make-tokenizer port)
   (define (next-token)
@@ -24,6 +27,7 @@
        ["true" (token "true" #t)]
        ["false" (token "false" #f)]
        ["null" (token "null" 'null)]
+       [env-ref-token (token 'ENVREF (substring lexeme 1))]
        [number-token (token 'NUMBER (string->number lexeme))]
        [id-token (token 'ID (string->symbol lexeme))]
        [(from/to "\"" "\"")
