@@ -5,7 +5,7 @@
 [x] Environment vars (through input vars)
 [] Require other fig files
 [] Unit tests
-[] Documentation
-[] Contracts
+[x] Documentation
+[x] Contracts
 [x] Input variables
 [x] (Foreign) function application

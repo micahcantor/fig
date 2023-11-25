@@ -1,7 +1,6 @@
 #lang racket/base
 
 (require racket/cmdline)
-(require "file.rkt")
 
 (define json-mode (make-parameter #f))
 
@@ -15,6 +14,12 @@
    #:args (filename . args)
 
    (define env (apply hash args))
-   (read-file filename (json-mode) env)))
+   (cond
+    [(json-mode)
+     (define fig->json (dynamic-require filename 'fig->json))
+     (fig->json env)]
+    [else
+     (define fig->hash (dynamic-require filename 'fig->hash))
+     (fig->hash env)])))
 
 main

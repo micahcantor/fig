@@ -1,17 +1,21 @@
 #lang racket/base
 
 (require "merge.rkt")
+(require racket/contract)
 
 (define environment (make-hash))
 
 (define-syntax-rule (fig-mb (fig-program STMT ...))
   (#%module-begin
    (require json)
-   (define (fig->hash [env (hash)])
+   (define env/c (hash/c string? any/c))
+   (define/contract (fig->hash [env (hash)])
+     (->* () (env/c) (hash/c symbol? any/c))
      (for ([(key value) env])
        (hash-set! environment key value))
      STMT ...)
-   (define (fig->json [env (hash)])
+   (define/contract (fig->json [env (hash)])
+     (->* () (env/c) string?)
      (jsexpr->string (fig->hash env)))
    (provide fig->hash fig->json)))
 

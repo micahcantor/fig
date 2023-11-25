@@ -1,4 +1,5 @@
 compiled/
+doc/
 scribblings/*.css
 scribblings/*.html
 scribblings/*.js

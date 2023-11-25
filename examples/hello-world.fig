@@ -1,6 +1,6 @@
 #lang fig
 
-let hello = "hello"
+let hello = "world"
 {
  "hello": hello,
  "goodbye": @goodbye
