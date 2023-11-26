@@ -2,11 +2,12 @@
 [x] Environment vars (through input vars)
 [x] Unit tests
   [x] Input vars
-  [] String escape
   [x] Null
+  [] String escape
   [] More merge
 [x] Documentation
 [x] Contracts
 [x] Input variables
 [x] (Foreign) function application
+[] String escape
 [] Require other fig files

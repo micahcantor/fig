@@ -73,7 +73,8 @@ However, this section will explain the finer details of the language.
 Literals in Fig are the same as those available in JSON, corresponding to the following Racket types:
 
 @itemlist[@item{@bold{Numbers} like @fig{1.5} are represented as @code{number?}.}
-          @item{@bold{Strings} like @fig{"hello"} are represented as @code{string?}.}
+          @item{@bold{Strings} like @fig{"hello"} are represented as @code{string?}.
+          Fig currently does not support escape characters in strings.}
           @item{@bold{Booleans} like @fig{true} and @fig{false} are represented as @code{boolean?}.}
           @item{@bold{Null} is written @fig{null} and is represented as @code{'null}.}
           @item{@bold{Lists} like @fig{[1, 2, 3]} are represented as @code{list?}.}

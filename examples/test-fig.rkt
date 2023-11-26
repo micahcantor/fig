@@ -1,5 +1,5 @@
 #lang racket/base
 
-(require (prefix-in hello- "hello-world.fig"))
+(require "hello-world.fig")
 
-(fig->json)
+(fig->hash)

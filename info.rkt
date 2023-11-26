@@ -1,6 +1,6 @@
 #lang info
 
-(define collection 'multi)
+(define collection "fig")
 (define scribblings '(("scribblings/fig.scrbl")))
-(define deps '("base"))
+(define deps '("base" "brag"))
 (define build-deps '("scribble-lib"))

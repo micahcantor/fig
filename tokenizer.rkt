@@ -17,6 +17,15 @@
 (define-lex-abbrev env-ref-token
   (:seq "@" id-token))
 
+(define (string-literal ip)
+  ;; delegate lexing of strings to the default Racket lexer
+  (define-values (line-start col-start pos-start) (port-next-location ip))
+  (define str (read ip))
+  (define-values (line-end col-end pos-end) (port-next-location ip))
+  (make-position-token (token (string-append "\"" str "\""))
+                       (make-position pos-start line-start col-start)
+                       (make-position pos-end line-end col-end)))
+
 (define (make-tokenizer port)
   (define (next-token)
     (define fig-lexer
@@ -31,8 +40,7 @@
        [number-token (token 'NUMBER (string->number lexeme))]
        [id-token (token 'ID (string->symbol lexeme))]
        [(from/to "\"" "\"")
-        (let ([value (substring lexeme 1 (sub1 (string-length lexeme)))])
-          (token 'STRING value))]
+        (token 'STRING (substring lexeme 1 (sub1 (string-length lexeme))))]
        [(eof) (void)]))
     (fig-lexer port))
   next-token)
