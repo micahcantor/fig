@@ -133,7 +133,7 @@ The simplest case for merge is when @code{e1} and @code{e2} are objects with no 
 In this case, the result of @code{e1 & e2} is a new object with the key/value pairs from @code{e1} and @code{e2}:
 
 @codeblock|{
- {"key1": 1} & {"key2": 2}
+ {"key1": 1} & {"key2": 2} == {"key1": 1, "key2": 2}
 }|
 
 In the case that @code{e1} and @code{e2} share a common key, Fig will attempt to recursively merge the values of these keys:
@@ -198,7 +198,7 @@ In particular, the module provides two procedures:
 
 @defproc[(fig->hash [environment (hash/c string? any/c)])
          any/c]{
-  Instantiates a Fig program to a hash table (or a Racket value, if Fig program does not produce and object).
+  Instantiates a Fig program to a hash table (or just a Racket value, if the Fig program does not produce an object).
   If provided, the keys in the @code{environment} are available in Fig as input variables.
 }
 
