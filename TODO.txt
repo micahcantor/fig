@@ -3,11 +3,10 @@
 [x] Unit tests
   [x] Input vars
   [x] Null
-  [] String escape
   [] More merge
 [x] Documentation
 [x] Contracts
 [x] Input variables
 [x] (Foreign) function application
-[] String escape
+[x] String escape
 [] Require other fig files

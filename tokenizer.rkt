@@ -1,6 +1,7 @@
 #lang racket/base
 
 (require brag/support)
+(require racket/match)
 
 (define-lex-abbrev digits (:+ (char-set "0123456789")))
 
@@ -17,12 +18,12 @@
 (define-lex-abbrev env-ref-token
   (:seq "@" id-token))
 
-(define (string-literal ip)
+(define (lex-string-lit ip)
   ;; delegate lexing of strings to the default Racket lexer
   (define-values (line-start col-start pos-start) (port-next-location ip))
   (define str (read ip))
   (define-values (line-end col-end pos-end) (port-next-location ip))
-  (make-position-token (token (string-append "\"" str "\""))
+  (make-position-token (token 'STRING str)
                        (make-position pos-start line-start col-start)
                        (make-position pos-end line-end col-end)))
 
@@ -39,10 +40,10 @@
        [env-ref-token (token 'ENVREF (substring lexeme 1))]
        [number-token (token 'NUMBER (string->number lexeme))]
        [id-token (token 'ID (string->symbol lexeme))]
-       [(from/to "\"" "\"")
-        (token 'STRING (substring lexeme 1 (sub1 (string-length lexeme))))]
        [(eof) (void)]))
-    (fig-lexer port))
+    (match (peek-bytes 1 0 port)
+      [#"\"" (lex-string-lit port)]
+      [_ (fig-lexer port)]))
   next-token)
 
 (provide make-tokenizer)

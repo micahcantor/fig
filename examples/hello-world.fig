@@ -1,5 +1,5 @@
 #lang fig
 
 {
- "hello": "world"
+ "hello": "world\n"
 }
