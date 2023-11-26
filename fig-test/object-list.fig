@@ -1,0 +1,6 @@
+#lang fig
+
+[
+ {"key": "value"},
+ {"key": "value"}
+]

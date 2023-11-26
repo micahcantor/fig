@@ -10,13 +10,17 @@
    (require json)
    (define env/c (hash/c string? any/c))
    (define/contract (fig->hash [env (hash)])
-     (->* () (env/c) (hash/c symbol? any/c))
+     (->* () (env/c) any/c)
      (for ([(key value) env])
        (hash-set! environment key value))
      STMT ...)
    (define/contract (fig->json [env (hash)])
      (->* () (env/c) string?)
-     (jsexpr->string (fig->hash env)))
+     (define result (fig->hash env))
+     ; Convert keys to symbols for jsexpr->string.
+     (define result-symbol-keys
+       (hash-map/copy (fig->hash env) (λ (key value) (values (string->symbol key) value))))
+     (jsexpr->string result-symbol-keys))
    (provide fig->hash fig->json)))
 
 (define-syntax-rule (fig-let ID VALUE)
@@ -31,7 +35,7 @@
   (list EXPR ...))
 
 (define-syntax-rule (fig-kvpair KEY VALUE)
-  (cons (string->symbol KEY) VALUE))
+  (cons KEY VALUE))
 
 (define-syntax-rule (fig-merge LEFT RIGHT)
   (merge LEFT RIGHT))
@@ -43,10 +47,15 @@
   (equal? LEFT RIGHT))
 
 (define-syntax-rule (fig-env-ref ENVREF)
-  (hash-ref environment ENVREF))
+  (hash-ref environment
+            ENVREF
+            (λ () (raise-user-error 'input "Unknown input variable ~a" ENVREF))))
 
 (define-syntax-rule (fig-cond CONDITION CONSEQUENT ALTERNATE)
   (if CONDITION CONSEQUENT ALTERNATE))
+
+(define-syntax-rule (fig-null)
+  'NULL)
 
 (provide (rename-out [fig-mb #%module-begin])
          fig-let
@@ -58,6 +67,7 @@
          fig-env-ref
          fig-cond
          fig-kvpair
+         fig-null
          #%datum
          #%top
          #%top-interaction)

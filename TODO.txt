@@ -1,11 +1,12 @@
-[x] Integrate with Racket library
-   [x] Command line program
-   [x] Read from file
-[] Package with raco
+[x] Package with raco
 [x] Environment vars (through input vars)
-[] Require other fig files
-[] Unit tests
+[x] Unit tests
+  [x] Input vars
+  [] String escape
+  [x] Null
+  [] More merge
 [x] Documentation
 [x] Contracts
 [x] Input variables
 [x] (Foreign) function application
+[] Require other fig files

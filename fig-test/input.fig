@@ -1,0 +1,9 @@
+#lang fig
+
+{
+ "number": @number,
+ "string": @string,
+ "boolean": @boolean,
+ "list": @list,
+ "object": @object,
+}

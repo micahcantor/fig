@@ -3,7 +3,7 @@
 @(require (for-label racket/base))
 @(require scribble/bnf)
 
-@title{fig: Simple and Extensible Configuration}
+@title{Fig: Simple and Extensible Configuration}
 @author{Micah Cantor}
 
 @defmodulelang[fig]
@@ -11,7 +11,7 @@
 @(define (fig x) (code #:lang "fig" x))
 
 @section{Introduction}
-Fig is a domain-specific language for composing configuration files.
+Fig is a domain-specific language for composing con@italic{fig}uration files.
 Fig is a super-set of JSON with some additional features to reduce repetition and increase correctness.
 These features include:
 
@@ -88,6 +88,7 @@ Variable bindings in Fig can be introduced at the top level:
 }|
 
 This form directly expands to @code{define}.
+Unlike in Racket, identifiers in Fig must begin with an alphabetic character.
 
 @subsection{Environment and Input}
 
@@ -190,16 +191,13 @@ fig-kvpair: STRING /":" fig-expr
 
 @section{Using Fig}
 
-Fig is designed to be used either from within the Racket ecosystem or completely separate from it.
-
-@subsection{From a Racket Program}
-
+Fig is designed to be used from within the Racket ecosystem.
 Since Fig expands to a Racket module, it can be required from a Racket program.
 In particular, the module provides two procedures:
 
 @defproc[(fig->hash [environment (hash/c string? any/c)])
-         (hash/c symbol? any/c)]{
-  Instantiates a Fig program to a hash table.
+         any/c]{
+  Instantiates a Fig program to a hash table (or a Racket value, if Fig program does not produce and object).
   If provided, the keys in the @code{environment} are available in Fig as input variables.
 }
 
@@ -210,13 +208,24 @@ In particular, the module provides two procedures:
   If provided, the keys in the @code{environment} are available in Fig as input variables.
 }
 
-@subsection{From the Command Line}
+Given a Fig program @code{example.fig}, we can require it from a Racket program:
 
-A Fig program can also be run from the command line.
-The first command line argument should be the Fig file.
-After that, any number of arguments can be specified as key/value pairs to be added to the environment.
-All values in the environment will be strings.
+@codeblock|{
+#lang racket/base
 
-@verbatim|{
-$ racket main.rkt example.fig "hello" 1
+(require "example.fig")
+
+(fig->hash)
+}|
+
+If more than one Fig program are required in a single Racket program, you can use @code{prefix-in} to distinguish their provided procedures:
+
+@codeblock|{
+#lang racket/base
+
+(require (prefix-in ex1- "ex1.fig")
+         (prefix-in ex2- "ex2.fig"))
+
+(ex1-fig->hash)
+(ex2-fig->hash)
 }|

@@ -10,5 +10,6 @@ fig-apply : /"(" [fig-expr]+ /")"
 fig-equal: fig-expr /"==" fig-expr
 fig-env-ref: ENVREF
 fig-cond: /"if" fig-expr /"then" fig-expr /"else" fig-expr
-@fig-lit: ID | STRING | NUMBER | "true" | "false" | "null"
+@fig-lit: ID | STRING | NUMBER | fig-null | "true" | "false"
+fig-null: /"null"
 fig-kvpair: STRING /":" fig-expr

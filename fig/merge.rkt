@@ -3,7 +3,7 @@
 (define (simple-merge left right key)
   (if (equal? left right)
       left
-      (error
+      (raise-user-error
        (if key
            (format "merge failure in '~a': operands are not equal." key)
            "merge failure: operands are not equal"))))
@@ -29,7 +29,7 @@
     [(and (boolean? left) (boolean? right))
      (simple-merge left right key)]
     [else
-     (error
+     (raise-user-error
       (if key
           (format "merge failure in '~a': operands are different types" key)
           "merge failure: operands are different types"))]))

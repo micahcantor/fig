@@ -1,0 +1,7 @@
+#lang fig
+
+{
+ "int": 42,
+ "float 1": 42.0,
+ "float 2": 0.1
+}

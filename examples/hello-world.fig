@@ -1,7 +1,5 @@
 #lang fig
 
-let hello = "world"
 {
- "hello": hello,
- "goodbye": @goodbye
+ "hello": "world"
 }

@@ -1,8 +1,6 @@
 #lang info
 
-(define collection "fig")
-(define version "0.1")
+(define collection 'multi)
 (define scribblings '(("scribblings/fig.scrbl")))
-(define deps '("base"
-               "brag"))
+(define deps '("base"))
 (define build-deps '("scribble-lib"))

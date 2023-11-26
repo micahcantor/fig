@@ -1,0 +1,14 @@
+#lang fig
+
+{
+ "numbers": 5 == 5,
+ "strings": "hello" == "world",
+ "null": null == null,
+ "objects": {"k1": "v1", "k2": "v2"} == {"k2": "v2", "k1": "v1"},
+ "objects not equal": {"k": "v"} == {"K": "v"},
+ "lists": [1, 2, 3] == [1, 2, 3],
+ "lists not equal": [1] == [2]
+}
+ 
+ 
+ 

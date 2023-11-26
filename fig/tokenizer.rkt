@@ -26,7 +26,7 @@
        [simple-token (token lexeme)]
        ["true" (token "true" #t)]
        ["false" (token "false" #f)]
-       ["null" (token "null" 'null)]
+       ["null" (token "null" 'NULL)]
        [env-ref-token (token 'ENVREF (substring lexeme 1))]
        [number-token (token 'NUMBER (string->number lexeme))]
        [id-token (token 'ID (string->symbol lexeme))]

@@ -1,0 +1,6 @@
+#lang fig
+
+{
+ "true": true,
+ "false": false
+}

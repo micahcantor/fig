@@ -2,6 +2,7 @@
 
 Fig is a domain-specific language for composing con*fig*uration files.
 Fig is a super-set of JSON with some additional features to reduce repetition and increase correctness.
+It is built in the Racket ecosystem, and can be compiled either to a Racket value or to JSON.
 Here's a small example:
 
 ```rkt
@@ -21,9 +22,6 @@ Here we have two objects, `user-info` and `server-info` that expect a few input 
 prefixed with the `@` operator) to be provided by the user: a username, an email, and a flag for if the service is running
 locally. These two objects are merged togetherusing the `&` operator.
 
-Fig is built in the Racket ecosystem, but can be used outside of Racket from the command line. 
-It can be compiled to either to a Racket hash table or to JSON.
-
 ## Using Fig from Racket
 
 If we save the above file as `example.fig`, then we can use it from another Racket program:
@@ -38,21 +36,16 @@ If we save the above file as `example.fig`, then we can use it from another Rack
                  "local" #t))
 ```
 
-## Using Fig from the CLI
+This produces the following JSON:
 
-To compile, execute
-
+```json
+{
+  "username": "cat",
+  "email": "cat@cat.com"
+  "base": "http://localhost:3000",
+  "endpoints": ["/cats", "/dogs"]
+}
 ```
-$ raco exe fig-cli/main.rkt
-```
-
-Then to execute a Fig program, run
-
-```
-$ ./fig-cli/main example.fig
-```
-
-After the first argument (the filename) all other arguments will be passed to the Fig program as the environment as key/value pairs.
 
 ## Documentation
 

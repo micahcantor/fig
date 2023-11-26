@@ -1,0 +1,6 @@
+#lang fig
+
+{
+ "truthy": if true then "truthy" else "falsey",
+ "falsey": if false then "truthy" else "falsey"
+}

@@ -1,0 +1,8 @@
+#lang fig
+
+{
+ "numbers": [1, 2, 3],
+ "strings": ["hello", "goodbye"],
+ "empty": [],
+ "singleton": [1]
+}

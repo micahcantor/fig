@@ -1,8 +1,5 @@
-#lang fig
+#lang racket/base
 
-let hello = "hello"
-let goodbye = @goodbye
-{
- "hello": hello,
- "goodbye": goodbye
-}
+(require (prefix-in hello- "hello-world.fig"))
+
+(fig->json)

@@ -1,0 +1,7 @@
+#lang fig
+
+{
+ "append result": (@append [1] [2, 3]),
+ "plus result": (@add 2 2),
+ "list result": (@list 1 2 3)
+}
