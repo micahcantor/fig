@@ -146,7 +146,7 @@ evaluates to @codeblock|{
  {"key1": {"key2": 2, "key3": 3}} 
 }|
 
-Merge can fail in the following cases:
+Merge fails in the following three cases:
 
 @itemlist[@item{@code{e1} and @code{e2} are different types.}
           @item{@code{e1} and @code{e2} are both non-objects but are not @code{equal?}.}
