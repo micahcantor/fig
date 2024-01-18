@@ -91,3 +91,10 @@
        "plus result" 4
        "list result" '(1 2 3))
  "Fig should apply Racket functions correctly.")
+
+(test-case "environment is not shared across runs"
+  (define result0 (run-file "repeat.fig" (hash "a" 42)))
+  (check-equal? result0 42)
+  (check-exn exn:fail:user?
+             (λ ()
+               (run-file "repeat.fig" (hash)))))
