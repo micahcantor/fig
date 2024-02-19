@@ -1,9 +1,14 @@
 #lang racket/base
 
 (require "merge.rkt")
-(require racket/contract)
+(require (for-syntax racket/base)
+         racket/contract
+         racket/stxparam)
 
-(define environment (make-hash))
+(define-syntax-parameter environment
+  (λ (stx)
+    (raise-syntax-error
+     #f "use of the environment keyword outside of fig" stx)))
 
 (define-syntax-rule (fig-mb (fig-program STMT ...))
   (#%module-begin
@@ -11,9 +16,8 @@
    (define env/c (hash/c string? any/c))
    (define/contract (fig->hash [env (hash)])
      (->* () (env/c) any/c)
-     (for ([(key value) env])
-       (hash-set! environment key value))
-     STMT ...)
+     (syntax-parameterize ([environment (make-rename-transformer #'env)])
+       STMT ...))
    (define/contract (fig->json [env (hash)])
      (->* () (env/c) string?)
      (define result (fig->hash env))
